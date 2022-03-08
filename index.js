@@ -52,6 +52,7 @@ function gameEngine(){
            
             snakeArr=[{x:13,y:15}];
             score=0;
+            scoreBox.innerHTML="Score: "+score;
       }
       //If snake have eaten the food increment the score and update the food
       if(snakeArr[0].x==food.x&&snakeArr[0].y==food.y){
