@@ -40,6 +40,19 @@ function isCollide(snakeArr){
      return false; 
 }
 
+function nextFood(snakeArr){
+      let a=2;
+      let b=16;
+      let temp={x: Math.round(a+(b-a)*Math.random()),y:Math.round(a+(b-a)*Math.random())}
+      //Checking wheather the snake food is on snake is not
+      for(let bdy of snakeArr){
+            if(bdy.x===temp.x&&bdy.y===temp.y){
+                  return nextFood(snakeArr);
+            }
+      }
+      return temp;
+}
+
 function gameEngine(){
       //updating the snake array and food
       if(isCollide(snakeArr)){
@@ -66,10 +79,9 @@ function gameEngine(){
               }
             scoreBox.innerHTML="Score: "+score;
             snakeArr.unshift({x:snakeArr[0].x+inputDir.x,y:snakeArr[0].y+inputDir.y})
-            let a=2;
-            let b=16;
+         
 
-            food = {x: Math.round(a+(b-a)*Math.random()),y:Math.round(a+(b-a)*Math.random())}
+            food = nextFood(snakeArr);
       }
 
       //Moving the snake
@@ -108,15 +120,6 @@ function gameEngine(){
 
 
 
-
-
-
-
-
-
-
-
-
 //Main logic starts from here
 let hiscore = localStorage.getItem("hiscore");
 if(hiscore === null){
@@ -136,22 +139,30 @@ window.addEventListener('keydown',e=>{
       movSound.play();
       switch(e.key){
             case "ArrowUp":
-                  
+                  if(snakeArr.length>1&&snakeArr[0].x==snakeArr[1].x&&snakeArr[0].y-1==snakeArr[1].y){
+                        break;
+                  }
                   inputDir.x= 0;
                   inputDir.y= -1;
                   break;
             case "ArrowDown":
-            
+                  if(snakeArr.length>1&&snakeArr[0].x==snakeArr[1].x&&snakeArr[0].y+1==snakeArr[1].y){
+                        break;
+                  }
                   inputDir.x= 0;
                   inputDir.y= 1;
                   break;
             case "ArrowLeft":
-
+                  if(snakeArr.length>1&&snakeArr[0].x-1==snakeArr[1].x&&snakeArr[0].y==snakeArr[1].y){
+                        break;
+                  }
                   inputDir.x= -1;
                   inputDir.y= 0;
                   break;
             case "ArrowRight":
-                  
+                  if(snakeArr.length>1&&snakeArr[0].x+1==snakeArr[1].x&&snakeArr[0].y==snakeArr[1].y){
+                        break;
+                  }
                   inputDir.x= 1;
                   inputDir.y= 0;
                   break;
